@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Modern Outfit</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#F5EFE6;--bg2:#EDE4D8;--card:#FDFAF6;--warm-white:#FAF7F2;
+  --brown:#7B5B3A;--brown-dark:#5C4128;--text:#2E1F0F;--muted:#9A8070;
+  --border:rgba(123,91,58,0.15);--white:#FFFFFF;
+}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;direction:rtl;}
+nav{background:var(--warm-white);border-bottom:1px solid var(--border);padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100;}
+.nav-logo{font-family:'Cairo',sans-serif;font-size:1.4rem;font-weight:900;letter-spacing:0.08em;color:var(--text);direction:ltr;}
+.nav-logo span{color:var(--brown);}
+.nav-links{display:flex;gap:2rem;}
+.nav-links a{font-size:0.82rem;color:var(--muted);text-decoration:none;cursor:pointer;transition:color .2s;font-weight:500;}
+.nav-links a:hover,.nav-links a.active{color:var(--text);}
+.nav-cart{cursor:pointer;background:var(--brown);color:var(--white);border:none;padding:0.5rem 1.2rem;font-family:'Cairo',sans-serif;font-size:0.8rem;display:flex;align-items:center;gap:8px;transition:background .2s;font-weight:600;}
+.nav-cart:hover{background:var(--brown-dark);}
+.cart-count{background:var(--bg2);color:var(--brown-dark);border-radius:50%;width:20px;height:20px;font-size:0.7rem;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.page{display:none;}.page.active{display:block;}
+.hero{background:var(--bg2);min-height:480px;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 2.5rem;gap:2rem;position:relative;overflow:hidden;}
+.hero-bg-text{position:absolute;left:-20px;top:50%;transform:translateY(-50%);font-size:12rem;color:rgba(123,91,58,0.06);line-height:1;pointer-events:none;user-select:none;font-weight:900;}
+.hero-content{z-index:1;padding:3rem 0;}
+.hero-tag{font-size:0.78rem;color:var(--brown);margin-bottom:1rem;display:flex;align-items:center;gap:8px;font-weight:600;}
+.hero-tag::after{content:'';width:24px;height:1px;background:var(--brown);}
+.hero-title{font-size:3.6rem;line-height:1.1;color:var(--text);margin-bottom:1.2rem;font-weight:900;}
+.hero-title span{color:var(--brown);}
+.hero-subtitle{font-size:0.92rem;color:var(--muted);line-height:2;margin-bottom:2rem;max-width:400px;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--brown);color:var(--white);padding:0.85rem 2rem;font-size:0.85rem;cursor:pointer;border:none;font-family:'Cairo',sans-serif;font-weight:600;transition:background .2s;}
+.btn-primary:hover{background:var(--brown-dark);}
+.btn-outline{display:inline-flex;align-items:center;gap:10px;background:transparent;color:var(--text);padding:0.85rem 2rem;font-size:0.85rem;cursor:pointer;border:1px solid var(--border);font-family:'Cairo',sans-serif;font-weight:500;transition:all .2s;}
+.btn-outline:hover{border-color:var(--brown);color:var(--brown);}
+.hero-visual{display:flex;align-items:center;justify-content:center;z-index:1;padding:2rem 0;}
+.hero-img-wrap{width:260px;height:340px;overflow:hidden;position:relative;}
+.hero-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:top;}
+.hero-img-wrap::before{content:'جديد';position:absolute;top:12px;right:12px;font-size:0.65rem;background:var(--brown);color:white;padding:3px 8px;font-family:'Cairo',sans-serif;font-weight:600;z-index:2;}
+.hero-stats{display:flex;gap:2rem;margin-top:2rem;}
+.stat-num{font-size:1.8rem;color:var(--text);font-weight:700;}
+.stat-label{font-size:0.75rem;color:var(--muted);}
+.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.cat-card{background:var(--card);padding:1.5rem;cursor:pointer;border:1px solid var(--border);transition:border-color .2s,transform .2s;position:relative;overflow:hidden;}
+.cat-card::before{content:'';position:absolute;top:0;right:0;left:0;height:2px;background:var(--brown);transform:scaleX(0);transform-origin:right;transition:transform .3s;}
+.cat-card:hover{border-color:var(--brown);transform:translateY(-2px);}
+.cat-card:hover::before{transform:scaleX(1);}
+.cat-thumb{width:100%;height:120px;object-fit:cover;object-position:top;margin-bottom:0.75rem;}
+.cat-name{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:2px;}
+.cat-count{font-size:0.75rem;color:var(--muted);}
+.cat-arrow{position:absolute;bottom:1rem;left:1rem;color:var(--brown);font-size:1.1rem;}
+.section{padding:2.5rem;}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;}
+.section-title{font-size:1.8rem;font-weight:700;color:var(--text);}
+.section-link{font-size:0.82rem;color:var(--brown);cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:6px;font-weight:600;}
+.section-link:hover{color:var(--brown-dark);}
+.filters{display:flex;gap:0.6rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+.filter-btn{padding:0.4rem 1rem;font-size:0.8rem;border:1px solid #1a1a1a;background:transparent;cursor:pointer;font-family:'Cairo',sans-serif;color:#1a1a1a;transition:all .2s;font-weight:600;}
+.filter-btn.active,.filter-btn:hover{background:#1a1a1a;color:white;}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.25rem;}
+.product-card{background:var(--card);cursor:pointer;border:1px solid var(--border);transition:border-color .2s,transform .2s;}
+.product-card:hover{border-color:#1a1a1a;transform:translateY(-3px);}
+.product-img{width:100%;aspect-ratio:3/4;overflow:hidden;position:relative;background:var(--bg2);}
+.product-img img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .4s;}
+.product-card:hover .product-img img{transform:scale(1.04);}
+.product-badge{position:absolute;top:10px;right:10px;font-size:0.68rem;padding:3px 9px;font-family:'Cairo',sans-serif;font-weight:600;z-index:2;background:#1a1a1a;color:white;}
+.product-info{padding:1rem;}
+.product-name{font-size:0.92rem;font-weight:600;margin-bottom:3px;color:var(--text);}
+.product-sub{font-size:0.75rem;color:var(--muted);margin-bottom:10px;}
+.product-footer{display:flex;align-items:center;justify-content:flex-end;}
+.add-btn{background:transparent;border:1px solid #1a1a1a;padding:6px 14px;font-size:0.75rem;cursor:pointer;font-family:'Cairo',sans-serif;color:#1a1a1a;transition:all .2s;font-weight:600;}
+.add-btn:hover{background:#1a1a1a;color:white;}
+.detail-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;padding:2.5rem;align-items:start;}
+.detail-img{width:100%;aspect-ratio:3/4;overflow:hidden;border:1px solid var(--border);background:var(--bg2);}
+.detail-img img{width:100%;height:100%;object-fit:cover;object-position:top;}
+.detail-tag{font-size:0.75rem;color:var(--brown);margin-bottom:0.75rem;font-weight:600;}
+.detail-title{font-size:2.2rem;line-height:1.2;color:var(--text);font-weight:800;margin-bottom:0.5rem;}
+.detail-desc{font-size:0.88rem;color:var(--muted);line-height:2;margin-bottom:1.8rem;margin-top:1rem;}
+.size-label{font-size:0.75rem;margin-bottom:0.75rem;color:var(--muted);font-weight:600;}
+.sizes{display:flex;gap:8px;margin-bottom:1.8rem;flex-wrap:wrap;}
+.size-btn{min-width:52px;height:46px;padding:0 10px;border:1px solid #1a1a1a;background:transparent;font-size:0.82rem;cursor:pointer;font-family:'Cairo',sans-serif;color:#1a1a1a;transition:all .2s;font-weight:500;}
+.size-btn.active,.size-btn:hover{background:#1a1a1a;color:white;}
+.detail-add{width:100%;padding:1rem;background:#1a1a1a;color:white;border:none;font-family:'Cairo',sans-serif;font-size:0.9rem;cursor:pointer;transition:background .2s;margin-bottom:1rem;font-weight:700;}
+.detail-add:hover{background:#333;}
+.back-link{font-size:0.82rem;color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:6px;margin:1.5rem 2.5rem;font-weight:500;}
+.back-link:hover{color:var(--text);}
+.cart-page{max-width:860px;margin:0 auto;padding:3rem 2rem;}
+.cart-title{font-size:2rem;font-weight:800;margin-bottom:2.5rem;color:var(--text);}
+.cart-empty{text-align:center;padding:4rem;color:var(--muted);}
+.cart-empty p{font-size:1.5rem;font-weight:700;margin-bottom:1rem;color:var(--text);}
+.cart-item{display:grid;grid-template-columns:90px 1fr auto;gap:1.25rem;align-items:center;padding:1.25rem 0;border-bottom:1px solid var(--border);}
+.cart-item-img{width:90px;height:110px;overflow:hidden;flex-shrink:0;}
+.cart-item-img img{width:100%;height:100%;object-fit:cover;object-position:top;}
+.cart-item-name{font-size:0.92rem;font-weight:600;margin-bottom:4px;color:var(--text);}
+.cart-item-meta{font-size:0.75rem;color:var(--muted);margin-bottom:10px;}
+.cart-qty{display:flex;align-items:center;gap:12px;}
+.qty-btn{width:30px;height:30px;border:1px solid #1a1a1a;background:transparent;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;color:var(--text);transition:all .2s;}
+.qty-btn:hover{background:#1a1a1a;color:white;}
+.cart-remove{font-size:0.72rem;color:var(--muted);cursor:pointer;text-decoration:underline;margin-top:4px;display:block;text-align:left;}
+.cart-summary{margin-top:2rem;padding:1.5rem;background:var(--card);border:1px solid var(--border);}
+.checkout-btn{width:100%;padding:1rem;background:#1a1a1a;color:white;border:none;font-family:'Cairo',sans-serif;font-size:0.9rem;cursor:pointer;transition:background .2s;font-weight:700;}
+.checkout-btn:hover{background:#333;}
+.toast{position:fixed;bottom:2rem;left:2rem;background:#1a1a1a;color:white;padding:0.85rem 1.5rem;font-size:0.85rem;z-index:999;transform:translateY(100px);opacity:0;transition:all .35s;pointer-events:none;font-family:'Cairo',sans-serif;font-weight:600;}
+.toast.show{transform:translateY(0);opacity:1;}
+.whatsapp-btn{display:flex;align-items:center;gap:8px;background:#25D366;color:white;border:none;padding:0.7rem 1.5rem;font-family:'Cairo',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;width:100%;justify-content:center;margin-bottom:0.75rem;transition:background .2s;}
+.whatsapp-btn:hover{background:#1ebe5d;}
+@media(max-width:640px){
+  .hero{grid-template-columns:1fr;}.hero-visual{display:none;}
+  .cats{grid-template-columns:1fr 1fr;}.detail-layout{grid-template-columns:1fr;}
+  nav{padding:0 1rem;}.nav-links{display:none;}.section{padding:1.5rem 1rem;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">MODERN <span>OUTFIT</span></div>
+  <div class="nav-links">
+    <a href="#" class="active" onclick="showPage('home',event)">الرئيسية</a>
+    <a href="#" onclick="showPage('shop',event)">المتجر</a>
+    <a href="#" onclick="showPage('shop',event,'قمصان')">قمصان</a>
+    <a href="#" onclick="showPage('shop',event,'بناطيل')">بناطيل</a>
+    <a href="#" onclick="showPage('shop',event,'أحذية')">أحذية</a>
+  </div>
+  <button class="nav-cart" onclick="showPage('cart',event)">
+    🛒 السلة <span class="cart-count" id="cart-count">0</span>
+  </button>
+</nav>
+
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-bg-text">MO</div>
+    <div class="hero-content">
+      <p class="hero-tag">كولكشن رجالي — 2026</p>
+      <h1 class="hero-title">لبس <span>أنيق</span><br/>وعيش بجرأة</h1>
+      <p class="hero-subtitle">ملابس رجالية راقية للرجل العصري — كل قطعة مصممة لتميزك.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('shop',event)">تسوق الآن ←</button>
+        <button class="btn-outline" onclick="showPage('shop',event,'قمصان')">وصل جديد</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-num">5</div><div class="stat-label">منتج حصري</div></div>
+        <div class="stat"><div class="stat-num">4.9★</div><div class="stat-label">تقييم</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-img-wrap">
+        <img src="IMG_9923.jpeg" alt="تيشيرت كت"/>
+      </div>
+    </div>
+  </div>
+  <section class="section">
+    <div class="section-header"><h2 class="section-title">تسوق حسب الفئة</h2></div>
+    <div class="cats" id="cat-grid"></div>
+  </section>
+  <section class="section" style="background:var(--bg2);">
+    <div class="section-header">
+      <h2 class="section-title">الأكثر مبيعاً</h2>
+      <a class="section-link" onclick="showPage('shop',event)">← شوف الكل</a>
+    </div>
+    <div class="product-grid" id="featured-grid"></div>
+  </section>
+</div>
+
+<div class="page" id="page-shop">
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">جميع المنتجات</h2>
+      <span style="font-size:0.82rem;color:var(--muted);font-weight:500;" id="product-count"></span>
+    </div>
+    <div class="filters" id="filter-bar">
+      <button class="filter-btn active" onclick="filterProducts('الكل',this)">الكل</button>
+      <button class="filter-btn" onclick="filterProducts('قمصان',this)">قمصان</button>
+      <button class="filter-btn" onclick="filterProducts('بناطيل',this)">بناطيل</button>
+      <button class="filter-btn" onclick="filterProducts('أحذية',this)">أحذية</button>
+    </div>
+    <div class="product-grid" id="shop-grid"></div>
+  </section>
+</div>
+
+<div class="page" id="page-detail">
+  <a class="back-link" onclick="goBack()">→ رجوع</a>
+  <div class="detail-layout">
+    <div class="detail-img"><img id="detail-img-el" src="" alt=""/></div>
+    <div>
+      <p class="detail-tag" id="detail-cat"></p>
+      <h1 class="detail-title" id="detail-name"></h1>
+      <p class="detail-desc" id="detail-desc"></p>
+      <p class="size-label">اختر المقاس</p>
+      <div class="sizes" id="detail-sizes"></div>
+      <button class="whatsapp-btn" id="detail-whatsapp-btn">📲 اطلب عبر واتساب</button>
+      <button class="detail-add" id="detail-add-btn">أضف للسلة</button>
+      <p style="font-size:.78rem;color:var(--muted);line-height:2;font-weight:500;">✓ توصيل سريع &nbsp;·&nbsp; ✓ إرجاع مجاني خلال 30 يوم</p>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-cart">
+  <div class="cart-page">
+    <h1 class="cart-title">سلة التسوق</h1>
+    <div id="cart-content"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ← غير رقم الواتساب هنا (مع كود الدولة بدون +)
+const WHATSAPP_NUMBER = '9647800000000';
+
+const products = [
+  {id:1, name:'تيشيرت كت', cat:'قمصان', img:'IMG_9923.jpeg', desc:'قميص كت أنيق بقصة مريحة وتصميم عصري. مناسب للخروجات اليومية.', sizes:['S','M','L','XL'], badge:'جديد'},
+  {id:2, name:'بجامة باگي', cat:'بناطيل', img:'IMG_9924.jpeg', desc:'بنطلون باگي واسع من قماش خفيف ومريح. تصميم عصري مع خيط للضبط.', sizes:['S','M','L','XL','XXL'], badge:'جديد'},
+  {id:3, name:'حذاء سامبا', cat:'أحذية', img:'IMG_9925.jpeg', desc:'حذاء سامبا كلاسيكي أبيض مع خطوط خضراء. لمسة أنيقة لأي إطلالة.', sizes:['40','41','42','43','44','45'], badge:'جديد'},
+  {id:4, name:'تيشيرت تريكو', cat:'قمصان', img:'IMG_9926.jpeg', desc:'بولو تريكو بقصة مضبوطة ولون رمادي داكن أنيق. خامة ناعمة ومريحة.', sizes:['S','M','L','XL'], badge:null},
+  {id:5, name:'فانيلة سوداء', cat:'قمصان', img:'IMG_9927.jpeg', desc:'فانيلة سوداء ريب بقصة مضبوطة. أساس كل ورديروب رجالي عصري.', sizes:['S','M','L','XL','XXL'], badge:null},
+];
+
+const categories = [
+  {name:'قمصان', img:'IMG_9923.jpeg', count:3},
+  {name:'بناطيل', img:'IMG_9924.jpeg', count:1},
+  {name:'أحذية', img:'IMG_9925.jpeg', count:1},
+];
+
+let cart=[], previousPage='home', selectedSize={};
+
+function renderCategories(){
+  const el=document.getElementById('cat-grid'); el.innerHTML='';
+  categories.forEach(c=>{
+    const d=document.createElement('div'); d.className='cat-card';
+    d.onclick=()=>showPage('shop',null,c.name);
+    d.innerHTML=`<img class="cat-thumb" src="${c.img}" alt="${c.name}"/><div class="cat-name">${c.name}</div><div class="cat-count">${c.count} منتج</div><div class="cat-arrow">←</div>`;
+    el.appendChild(d);
+  });
+}
+
+function renderCard(p,targetEl){
+  const d=document.createElement('div'); d.className='product-card';
+  d.onclick=()=>showDetail(p.id);
+  d.innerHTML=`
+    <div class="product-img">
+      <img src="${p.img}" alt="${p.name}" loading="lazy"/>
+      ${p.badge?`<span class="product-badge">${p.badge}</span>`:''}
+    </div>
+    <div class="product-info">
+      <div class="product-name">${p.name}</div>
+      <div class="product-sub">${p.cat}</div>
+      <div class="product-footer">
+        <button class="add-btn" onclick="event.stopPropagation();quickAdd(${p.id})">+ أضف للسلة</button>
+      </div>
+    </div>`;
+  targetEl.appendChild(d);
+}
+
+function renderFeatured(){const el=document.getElementById('featured-grid');el.innerHTML='';products.forEach(p=>renderCard(p,el));}
+function renderShop(filter='الكل'){
+  const el=document.getElementById('shop-grid');el.innerHTML='';
+  const filtered=filter==='الكل'?products:products.filter(p=>p.cat===filter);
+  document.getElementById('product-count').textContent=filtered.length+' منتج';
+  filtered.forEach(p=>renderCard(p,el));
+}
+function filterProducts(cat,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');renderShop(cat);
+}
+function showPage(name,e,filter){
+  if(e)e.preventDefault();
+  const prev=document.querySelector('.page.active');
+  if(prev)previousPage=prev.id.replace('page-','');
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  if(name==='home')document.querySelector('.nav-links a').classList.add('active');
+  if(name==='shop'){renderShop(filter||'الكل');if(filter){document.querySelectorAll('.filter-btn').forEach(b=>{b.classList.remove('active');if(b.textContent===filter)b.classList.add('active');});}}
+  if(name==='cart')renderCart();
+  window.scrollTo(0,0);
+}
+function showDetail(id){
+  previousPage=document.querySelector('.page.active').id.replace('page-','');
+  const p=products.find(x=>x.id===id);
+  selectedSize[id]=p.sizes[0];
+  document.getElementById('detail-img-el').src=p.img;
+  document.getElementById('detail-img-el').alt=p.name;
+  document.getElementById('detail-cat').textContent=p.cat;
+  document.getElementById('detail-name').textContent=p.name;
+  document.getElementById('detail-desc').textContent=p.desc;
+  const sizesEl=document.getElementById('detail-sizes');sizesEl.innerHTML='';
+  p.sizes.forEach((s,i)=>{
+    const btn=document.createElement('button');
+    btn.className='size-btn'+(i===0?' active':'');
+    btn.textContent=s;
+    btn.onclick=()=>{selectedSize[id]=s;document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');};
+    sizesEl.appendChild(btn);
+  });
+  document.getElementById('detail-add-btn').onclick=()=>{addToCart(id,selectedSize[id]);toast(p.name+' — أضيف للسلة ✓');};
+  document.getElementById('detail-whatsapp-btn').onclick=()=>{
+    const size=selectedSize[id]||p.sizes[0];
+    const msg=encodeURIComponent(`مرحبا، أريد أطلب:\n🛍 ${p.name}\n📏 مقاس: ${size}`);
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`,'_blank');
+  };
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-detail').classList.add('active');
+  window.scrollTo(0,0);
+}
+function goBack(){showPage(previousPage,null);}
+function quickAdd(id){const p=products.find(x=>x.id===id);addToCart(id,p.sizes[0]);toast(p.name+' — أضيف للسلة ✓');}
+function addToCart(id,size){
+  const existing=cart.find(c=>c.id===id&&c.size===size);
+  if(existing)existing.qty++;
+  else{const p=products.find(x=>x.id===id);cart.push({...p,size,qty:1});}
+  updateCartCount();
+}
+function updateCartCount(){document.getElementById('cart-count').textContent=cart.reduce((s,c)=>s+c.qty,0);}
+function renderCart(){
+  const el=document.getElementById('cart-content');
+  if(!cart.length){
+    el.innerHTML=`<div class="cart-empty"><p>سلتك فاضية</p><button onclick="showPage('shop',event)" style="padding:.75rem 2rem;background:#1a1a1a;color:white;border:none;font-family:'Cairo',sans-serif;font-size:.85rem;cursor:pointer;font-weight:700;">تسوق الآن</button></div>`;
+    return;
+  }
+  const itemsHtml=cart.map((c,i)=>`
+    <div class="cart-item">
+      <div class="cart-item-img"><img src="${c.img}" alt="${c.name}"/></div>
+      <div>
+        <div class="cart-item-name">${c.name}</div>
+        <div class="cart-item-meta">${c.cat} · مقاس: ${c.size}</div>
+        <div class="cart-qty">
+          <button class="qty-btn" onclick="changeQty(${i},-1)">−</button>
+          <span style="font-size:.9rem;min-width:20px;text-align:center;">${c.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${i},1)">+</button>
+        </div>
+      </div>
+      <div><span class="cart-remove" onclick="removeItem(${i})">حذف</span></div>
+    </div>`).join('');
+  const cartSummary=cart.map(c=>`${c.name} (${c.size}) x${c.qty}`).join('\n');
+  el.innerHTML=itemsHtml+`
+    <div class="cart-summary">
+      <button class="whatsapp-btn" onclick="orderViaWhatsapp()">📲 اطلب الكل عبر واتساب</button>
+      <button class="checkout-btn" onclick="toast('جاري تطوير خاصية الدفع!')">إتمام الشراء →</button>
+    </div>`;
+}
+function orderViaWhatsapp(){
+  const lines=cart.map(c=>`• ${c.name} — مقاس ${c.size} x${c.qty}`).join('\n');
+  const msg=encodeURIComponent(`مرحبا، أريد أطلب:\n${lines}`);
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`,'_blank');
+}
+function changeQty(i,delta){cart[i].qty+=delta;if(cart[i].qty<=0)cart.splice(i,1);updateCartCount();renderCart();}
+function removeItem(i){cart.splice(i,1);updateCartCount();renderCart();}
+let toastTimer;
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.remove('show'),2500);
+}
+renderCategories();renderFeatured();renderShop();
+</script>
+</body>
+</html>
